@@ -5,9 +5,16 @@ function TodayFoods(props) {
       <ul>
         {props.todayFoods.map((currentFoodObj) => {
           const { name, quantity, calories } = currentFoodObj;
+
           return (
-            <li>
+            <li key={name}>
               {quantity} {name} = {calories * quantity} cal
+              <button
+                className="button is-danger ml-2"
+                onClick={() => props.onFoodRemove(currentFoodObj)}
+              >
+                -
+              </button>
             </li>
           );
         })}

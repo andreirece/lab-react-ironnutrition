@@ -1,71 +1,69 @@
 import { useState } from 'react';
 
-function AddNewFood() {
-  const [newItem, setNewItem] = useState({
-    name: '',
-    calories: 0,
-    img: '',
-  });
+function AddNewFood(props) {
+  const [newFood, setNewFood] = useState({});
 
-  function handleClick() {
-    return (
-      <div></div>
-      //   <form>
-      //     <input className="input" type="text" label="Insert name of the food" />
-
-      //     <label>
-      //       Insert quantity of calories:{' '}
-      //       <input
-      //         className="input"
-      //         type="number"
-      //         placeholder="Insert quantity of calories"
-      //       ></input>
-      //     </label>
-
-      //     <input type="file" />
-
-      //     <button className="button is-info mb-3" type="submit">
-      //       Submit
-      //     </button>
-      //   </form>
-    );
+  function handleSubmitForm(event) {
+    event.preventDefault();
+    props.insertNewItem({
+      ...newFood,
+      calories: Number(newFood.calories),
+    });
   }
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    setNewItem({
-      [event.target.name]: event.target.value,
+  function handleChangeField(event) {
+    const fieldName = event.target.name;
+    setNewFood({
+      ...newFood,
+      [fieldName]: event.target.value,
     });
-    console.log(newItem);
   }
 
   return (
-    <div>
-      <button className="button is-info mb-3" onClick={handleClick}>
-        Insert new food
+    <form onSubmit={handleSubmitForm}>
+      <div className="field">
+        <label className="label">Insert the food name</label>
+        <div className="control">
+          <input
+            className="input"
+            type="text"
+            value={newFood.name}
+            name="name"
+            onChange={handleChangeField}
+          />
+        </div>
+      </div>
+
+      <div className="field">
+        <label className="label"> Insert quantity of calories</label>
+        <div className="control">
+          <input
+            className="input"
+            type="number"
+            value={newFood.calories}
+            name="calories"
+            onChange={handleChangeField}
+          />
+        </div>
+      </div>
+
+      <div className="field">
+        <label className="label"> Insert Image URL</label>
+        <div className="control">
+          <input
+            className="input"
+            type="text"
+            value={newFood.image}
+            name="image"
+            onChange={handleChangeField}
+          />
+        </div>
+      </div>
+
+      <button className="button is-info mb-5" type="submit">
+        Insert
       </button>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Insert the food name here:{' '}
-          <input className="input mb-3" type="text" name="name" />
-        </label>
-
-        <label>
-          Insert quantity of calories:{' '}
-          <input className="input mb-3" type="number" name="calories" />
-        </label>
-
-        <input className="input mb-3" type="file" name="image" />
-
-        <button
-          className="button is-info mb-3"
-          type="submit"
-          onClick={handleSubmit}
-        >
-          Submit
-        </button>
-      </form>
-    </div>
+    </form>
   );
 }
 
