@@ -36,34 +36,27 @@ function App() {
   }
 
   function onFoodAdd(foodObj) {
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
+    const foodObjIndex = todayFoods.findIndex(
+      (currentFoodObj) => currentFoodObj.name === foodObj.name
+    );
 
-    //
-    //
-    // const idxCurrentObj = todayFoods.indexOf(foodObj); Só dá -1, mesmo existindo objeto igual dentro.
+    // Verifica se já existe uma comida com esse nome na lista de comidas consumidas hoje
+    if (foodObjIndex > -1) {
+      // Crie um clone da array de comidas para não modificar a original
+      const clone = [...todayFoods];
 
-    const clone = [...todayFoods];
+      // Acesse o objeto a ser atualizado através do índice
+      const foodObjToUpdate = clone[foodObjIndex];
 
-    // if (idxCurrentObj > -1) {
-    //   todayFoods[idxCurrentObj].quantity =
-    //     todayFoods[idxCurrentObj].quantity + 1;
-    // }
+      // Some a quantidade existente com a quantidade do novo objeto sendo adicionado
+      foodObjToUpdate.quantity = foodObjToUpdate.quantity + foodObj.quantity;
 
-    // if (idxCurrentObj < 0) {
-    clone.push(foodObj);
-    // }
+      // Atualiza o state com o clone da array modificado
+      return setTodayFoods(clone);
+    }
 
-    setTodayFoods(clone);
+    // Caso não exista, adicione o objeto inteiro
+    setTodayFoods([...todayFoods, foodObj]);
   }
 
   function onFoodRemove(obj) {
@@ -104,6 +97,7 @@ function App() {
               key={currentFoodObj.name}
               food={currentFoodObj}
               onFoodAdd={onFoodAdd}
+              todayFoods={todayFoods}
             />
           ))}
         </div>

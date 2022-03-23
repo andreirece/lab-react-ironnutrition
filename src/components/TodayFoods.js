@@ -5,6 +5,9 @@ function TodayFoods(props) {
       <ul>
         {props.todayFoods.map((currentFoodObj) => {
           const { name, quantity, calories } = currentFoodObj;
+          const idxCurrentObj = props.todayFoods.indexOf(currentFoodObj);
+
+          console.log(idxCurrentObj);
 
           return (
             <li key={name}>
